@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:17
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      retries: 1
+      timeout: 5s
+
+  api:
+    build:
+      args:
+        - API_WORKING_DIRECTORY=${API_WORKING_DIRECTORY}
+      context: ./newsletter_backend
+      dockerfile: docker/Dockerfile
+    ports:
+      - ${API_LOCAL_PORT}:${API_CONTAINER_PORT}
+    container_name: ${API_NAME}
+    image: ${API_NAME}:${API_VERSION}
+    volumes:
+      - ./newsletter_backend:/app
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    command:
+      - sh
+      - -c
+      - |
+        python manage.py migrate
+        python manage.py runserver ${API_HOST}:${API_CONTAINER_PORT}
+
+  web:
+    build:
+      args:
+        - WEB_WORKING_DIRECTORY=${WEB_WORKING_DIRECTORY}
+      context: ./newsletter_frontend
+      dockerfile: docker/Dockerfile
+    ports:
+      - ${WEB_LOCAL_PORT}:${WEB_CONTAINER_PORT}
+    container_name: ${WEB_NAME}
+    image: ${WEB_NAME}:${WEB_VERSION}
+    env_file:
+      - .env
+    depends_on:
+      api:
+        condition: service_started
+    command:
+      - sh
+      - -c
+      - |
+        nginx -g 'daemon off;'
+
+volumes:
+  db_data:
