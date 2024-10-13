@@ -27,8 +27,9 @@ services:
       - ${API_LOCAL_PORT}:${API_CONTAINER_PORT}
     container_name: ${API_NAME}
     image: ${API_NAME}:${API_VERSION}
+    tty: true
     volumes:
-      - ./newsletter_backend:/app
+      - ./newsletter_backend:${API_WORKING_DIRECTORY}
     env_file:
       - .env
     depends_on:
@@ -51,16 +52,18 @@ services:
       - ${WEB_LOCAL_PORT}:${WEB_CONTAINER_PORT}
     container_name: ${WEB_NAME}
     image: ${WEB_NAME}:${WEB_VERSION}
+    tty: true
+    volumes:
+      - ./newsletter_frontend:${WEB_WORKING_DIRECTORY}
+      - ${WEB_WORKING_DIRECTORY}/node_modules
     env_file:
       - .env
     depends_on:
       api:
         condition: service_started
-    command:
-      - sh
-      - -c
-      - |
-        nginx -g 'daemon off;'
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    command: ["sh", "-c", "npm run dev --host"]
 
 volumes:
   db_data:

@@ -9,11 +9,3 @@ COPY ../package*.json ./
 RUN npm install
 
 COPY .. .
-
-RUN npm run build
-
-FROM nginx:alpine
-
-ARG WEB_WORKING_DIRECTORY
-
-COPY --from=build ${WEB_WORKING_DIRECTORY}/dist /usr/share/nginx/html
