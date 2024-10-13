@@ -51,6 +51,7 @@ class User(AbstractUser):
     """
     Custom user model with email as username field
     """
+    username = None
     email = models.EmailField(_("email address"), blank=True, unique=True)
 
     USERNAME_FIELD = "email"
