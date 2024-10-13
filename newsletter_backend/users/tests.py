@@ -2,10 +2,9 @@ from django.test import TestCase
 from django.urls import reverse
 from .models import User
 
-
 class UserRegistrationTestCase(TestCase):
     def setUp(self):
-        self.url = reverse('register')
+        self.url = reverse("register")
 
     def test_register_user_success(self):
         """
@@ -21,7 +20,7 @@ class UserRegistrationTestCase(TestCase):
 
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data, {"success": "User registered successfully!"})
-        self.assertTrue(User.objects.filter(email=data['email']).exists())
+        self.assertTrue(User.objects.filter(email=data["email"]).exists())
 
     def test_register_user_invalid_data(self):
         """
@@ -36,7 +35,7 @@ class UserRegistrationTestCase(TestCase):
         response = self.client.post(self.url, data)
 
         self.assertEqual(response.status_code, 400)
-        self.assertFalse(User.objects.filter(first_name="John").exists())
+        self.assertFalse(User.objects.filter(first_name="Wrong").exists())
 
     def test_register_user_invalid_email_data(self):
         """
@@ -53,7 +52,7 @@ class UserRegistrationTestCase(TestCase):
         response = self.client.post(self.url, data)
 
         self.assertEqual(response.status_code, 400)
-        self.assertTrue(User.objects.filter(email=data['email']).exists())
+        self.assertTrue(User.objects.filter(email=data["email"]).exists())
 
 class UserAuthenticationTestCase(TestCase):
     def setUp(self):

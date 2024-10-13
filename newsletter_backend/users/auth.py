@@ -3,7 +3,6 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
 
-
 class AuthService:
     @staticmethod
     def create_user(email, password, first_name, last_name, **extra_fields) -> User:

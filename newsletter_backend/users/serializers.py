@@ -3,12 +3,10 @@ from django.utils.translation import gettext_lazy as _
 from .models import User
 from .auth import AuthService
 
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "email", "first_name", "last_name"]
-
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,7 +16,6 @@ class RegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = AuthService.create_user(**validated_data)
         return user
-
 
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField(write_only=True)
