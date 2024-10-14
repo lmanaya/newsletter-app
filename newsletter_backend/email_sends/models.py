@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from .constants import STATUS_EMAIL_CHOICES, PENDING_STATUS
@@ -15,17 +16,37 @@ class AbstractUpload(models.Model):
     class Meta:
         abstract = True
 
+def validate_document_file_type(value):
+    valid_extensions = ['.pdf']
+    ext = value.name.split('.')[-1]
+    if f'.{ext}' not in valid_extensions:
+        raise ValidationError(_(f"Invalid file type: {value.name}. Allowed types: {valid_extensions}"))
+
 class DocumentUpload(AbstractUpload):
     """" Model for uploaded documents (PDF files). """
-    file = models.FileField(_("file"), upload_to='uploads/documents/')
+    file = models.FileField(
+        _("file"),
+        upload_to='uploads/documents/',
+        validators=[validate_document_file_type]
+    )
 
     class Meta:
         verbose_name = _("document")
         verbose_name_plural = _("documents")
 
+def validate_image_file_type(value):
+    valid_extensions = ['.png']
+    ext = value.name.split('.')[-1]
+    if f'.{ext}' not in valid_extensions:
+        raise ValidationError(_(f"Invalid file type: {value.name}. Allowed types: {valid_extensions}"))
+
 class ImageUpload(AbstractUpload):
     """" Model for uploaded images. (PNG files) """
-    file = models.ImageField(_("file"), upload_to='uploads/images/')
+    file = models.ImageField(
+        _("file"),
+        upload_to='uploads/images/',
+        validators=[validate_image_file_type]
+    )
 
     class Meta:
         verbose_name = _("image")
