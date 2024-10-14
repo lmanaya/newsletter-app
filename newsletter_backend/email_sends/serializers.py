@@ -2,7 +2,8 @@ from rest_framework import serializers
 from django.utils.translation import gettext_lazy as _
 from .mixins import NewsletterEmailValidationMixin
 from .models import NewsletterEmail, ImageUpload, DocumentUpload
-from newsletters.models import Newsletter, Subscriber
+from .constants import SENDED_STATUS
+from newsletters.models import Newsletter
 
 class NewsletterEmailSerializer(serializers.ModelSerializer):
     """ Serializer for listing or retrieving newsletter emails. """
@@ -29,6 +30,14 @@ class NewsletterEmailUpdateSerializer(
     class Meta:
         model = NewsletterEmail
         fields = "__all__"
+
+class SendNewsletterEmailSerializer(serializers.Serializer):
+    """ Serializer for sending newsletter emails. """
+    newsletter_email = serializers.PrimaryKeyRelatedField(
+        queryset=NewsletterEmail.objects.all().exclude(
+            status=SENDED_STATUS
+        )
+    )
 
 class ImageUploadSerializer(serializers.ModelSerializer):
     class Meta:
