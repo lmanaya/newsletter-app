@@ -17,6 +17,28 @@ services:
       retries: 1
       timeout: 5s
 
+  redis:
+    image: "redis:alpine"
+    ports:
+      - ${REDIS_LOCAL_PORT}:${REDIS_PORT}
+    volumes:
+      - redis_data:/data
+
+  celery:
+    build:
+      args:
+        - API_WORKING_DIRECTORY=${API_WORKING_DIRECTORY}
+      context: ./newsletter_backend
+      dockerfile: docker/Dockerfile
+    command: celery -A config worker --loglevel=info
+    volumes:
+      - ./newsletter_backend:${API_WORKING_DIRECTORY}
+    depends_on:
+      - redis
+    user: nobody
+    env_file:
+      - .env
+
   api:
     build:
       args:
@@ -35,6 +57,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_started
     command:
       - sh
       - -c
@@ -67,3 +91,4 @@ services:
 
 volumes:
   db_data:
+  redis_data:
