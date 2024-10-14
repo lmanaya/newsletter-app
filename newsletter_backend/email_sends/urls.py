@@ -1,6 +1,15 @@
 from django.urls import path
-from .views import SendEmailView
+from rest_framework import routers
+from .views import SendNewsletterView
+from .viewsets import (
+    ImageUploadViewSet,
+    DocumentUploadViewSet
+)
 
-urlpatterns = [
-    path("", SendEmailView.as_view(), name="register"),
-]
+router = routers.SimpleRouter()
+router.register(r"images", ImageUploadViewSet)
+router.register(r"documents", DocumentUploadViewSet)
+
+urlpatterns = []
+
+urlpatterns += router.urls

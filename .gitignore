@@ -36,4 +36,8 @@ tsconfig.app.tsbuildinfo
 *.sln
 *.sw?
 
+# Enviroment variables
 .env
+
+# Media ans static files
+media/
