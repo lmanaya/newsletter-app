@@ -3,10 +3,10 @@ from .models import NewsletterEmail
 from .tasks import send_newsletter_email_task
 from django.template.loader import render_to_string
 from newsletters.models import Subscriber
-from os import environ, path, remove
-from django.conf import settings
+from os import environ
 from django.template import Template, Context
 from .constants import SENDED_STATUS
+import mimetypes
 
 class EmailService:
     @staticmethod
@@ -45,36 +45,63 @@ class EmailService:
         return template.render(context)
 
     @staticmethod
-    def mark_newsletter_email_as_sent(newsletterEmail: NewsletterEmail) -> None:
+    def mark_newsletter_email_as_sent(newsletter_email: NewsletterEmail) -> None:
         """
         Mark the newsletter email as sent.
 
         Args:
-            newsletterEmail (NewsletterEmail): The newsletter email to update.
+            newsletter_email (NewsletterEmail): The newsletter email to update.
         """
-        newsletterEmail.status = SENDED_STATUS
-        newsletterEmail.save()
+        newsletter_email.status = SENDED_STATUS
+        newsletter_email.save()
 
     @staticmethod
-    def send_newsletter_email(newsletterEmail: NewsletterEmail) -> None:
+    def send_newsletter_email(newsletter_email: NewsletterEmail) -> None:
         """
         Send newsletter email to subscribers.
 
         Args:
-            newsletterEmail (NewsletterEmail): The newsletter email to send.
+            newsletter_email (NewsletterEmail): The newsletter email to send.
         """
-        for subscriber in newsletterEmail.subscribers.all():
+        for subscriber in newsletter_email.subscribers.all():
             html_content = EmailService.get_newsletter_email_html_content(
                 subscriber=subscriber,
-                body=newsletterEmail.body,
-                title=newsletterEmail.title,
-                content=newsletterEmail.content
-            )
-            send_newsletter_email_task.delay(
-                newsletter_email_pk=newsletterEmail.pk,
-                subject=newsletterEmail.subject,
-                subscriber=subscriber.email,
-                html_content=html_content
+                body=newsletter_email.body,
+                title=newsletter_email.title,
+                content=newsletter_email.content
             )
 
-        EmailService.mark_newsletter_email_as_sent(newsletterEmail)
+            attached_files_info = EmailService.set_attached_files_info(newsletter_email)
+
+            send_newsletter_email_task.delay(
+                newsletter_email_pk=newsletter_email.pk,
+                subject=newsletter_email.subject,
+                subscriber=subscriber.email,
+                html_content=html_content,
+                attached_files_info=attached_files_info,
+            )
+
+        EmailService.mark_newsletter_email_as_sent(newsletter_email)
+
+    @staticmethod
+    def set_attached_files_info(newsletter_email: NewsletterEmail) -> list:
+        """
+        Set attached files info for newsletter email.
+
+        Args:
+            newsletter_email (NewsletterEmail): The newsletter email to get de attached files.
+        """
+        attached_files_info = []
+
+        documents = [ document for document in newsletter_email.attached_documents.all() ] \
+            + [ image for image in newsletter_email.attached_images.all() ]
+
+        for document in documents:
+            content_type, _ = mimetypes.guess_type(document.file.path)
+            attached_files_info.append({
+                "name": document.name,
+                "url": document.file.path,
+                "content_type": content_type
+            })
+
+        return attached_files_info
