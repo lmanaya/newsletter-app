@@ -2,13 +2,15 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    name: 'App',
+    name: '404View',
     setup() {}
 });
 </script>
 
 <template>
-  <div id="app">
-    <router-view />
-  </div>
+    <div class="container">
+        <p>Not found view</p>
+    </div>
 </template>
+
+<style></style>

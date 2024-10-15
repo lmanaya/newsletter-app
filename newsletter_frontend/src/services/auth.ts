@@ -1,6 +1,7 @@
 import api from './api';
 import store from '../store';
 import { transformUser } from '../utils/transform';
+import { useRouter } from 'vue-router';
 
 export const login = async (email: string, password: string) => {
     const response = await api.post('/users/login/', {
@@ -8,14 +9,17 @@ export const login = async (email: string, password: string) => {
         password: password
     });
 
-    const user = response.data.user;
+    if (response.status === 200) {
+        const user = response.data.user;
 
-    localStorage.setItem('accessToken', response.data.access_token);
-    localStorage.setItem('refreshToken', response.data.refresh_token);
-    localStorage.setItem('user', user);
+        localStorage.setItem('accessToken', response.data.access_token);
+        localStorage.setItem('refreshToken', response.data.refresh_token);
+        localStorage.setItem('user', user);
 
-    await store.dispatch('login', transformUser(user));
+        await store.dispatch('login', transformUser(user));
 
+        window.location.reload();
+    }
     return response.data;
 };
 
@@ -30,6 +34,8 @@ export const logout = async () => {
     localStorage.removeItem('user');
 
     await store.dispatch('logout');
+
+    window.location.reload();
 
     return response.data;
 };

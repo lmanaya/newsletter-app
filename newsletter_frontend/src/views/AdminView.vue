@@ -2,13 +2,15 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    name: 'App',
+    name: 'AdminView',
     setup() {}
 });
 </script>
 
 <template>
-  <div id="app">
-    <router-view />
-  </div>
+    <div class="container">
+        <p>Admin view</p>
+    </div>
 </template>
+
+<style></style>
