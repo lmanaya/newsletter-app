@@ -1,10 +1,16 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { login, logout } from '../services/auth';
+import { defineComponent, computed } from 'vue';
+import { login, logout, register } from '../services/auth';
+import { useStore } from 'vuex';
 
 export default defineComponent({
     name: 'LoginView',
     setup() {
+        const store = useStore();
+
+        const isAuthenticated = computed(() => store.getters.isAuthenticated);
+        const user = computed(() => store.getters.getUser);
+
         const loginUser = () => {
             console.log("login");
             login("admin1@newsletter.com", "p@ssw0rd");
@@ -15,9 +21,17 @@ export default defineComponent({
             logout();
         };
 
+        const registerUser = () => {
+            console.log("register");
+            register("admin2@newsletter.com", "p@ssw0rd", "Admin", "Newsletter");
+        };
+
         return {
+            isAuthenticated,
+            user,
             loginUser,
-            logoutUser
+            logoutUser,
+            registerUser,
         }
     }
 });
@@ -26,8 +40,11 @@ export default defineComponent({
 <template>
     <div class="container">
         <p>Login view</p>
+        <p v-if="isAuthenticated">Está autenticado</p>
+        <p v-else>No está autenticado</p>
         <button @click.prevent="loginUser">Iniciar sesión</button>
         <button @click.prevent="logoutUser">Cerrar sesión</button>
+        <button @click.prevent="registerUser">Registro</button>
     </div>
 </template>
 
