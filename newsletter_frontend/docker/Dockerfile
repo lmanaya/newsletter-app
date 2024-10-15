@@ -6,6 +6,6 @@ WORKDIR ${WEB_WORKING_DIRECTORY}
 
 COPY ../package*.json ./
 
-RUN npm install
+RUN npm install --no-cache
 
 COPY .. .
