@@ -1,28 +1,35 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
-import { login, register } from '../services/auth';
-import { useStore } from 'vuex';
+import { useAuth } from '../composables/useAuth';
 
 export default defineComponent({
     name: 'LoginView',
     setup() {
-        const store = useStore();
+        const {
+            loading,
+            user,
+            login,
+            register
+        } = useAuth();
 
-        const isAuthenticated = computed(() => store.getters.isAuthenticated);
-        const user = computed(() => store.getters.getUser);
-
-        const loginUser = () => {
-            console.log("login");
-            login("admin1@newsletter.com", "p@ssw0rd");
+        const loginUser = async () => {
+            await login({
+                email: "adminx@newsletter.com",
+                password: "p@ssw0rd"
+            });
         };
 
-        const registerUser = () => {
-            console.log("register");
-            register("admin2@newsletter.com", "p@ssw0rd", "Admin", "Newsletter");
+        const registerUser = async () => {
+            await register({
+                email: "admin2@newsletter.com",
+                password: "p@ssw0rd",
+                first_name: "Admin",
+                last_name: "Newsletter"
+            });
         };
 
         return {
-            isAuthenticated,
+            loading,
             user,
             loginUser,
             registerUser,
@@ -34,8 +41,7 @@ export default defineComponent({
 <template>
     <div class="container">
         <p>Login view</p>
-        <p v-if="isAuthenticated">User is authenticated</p>
-        <p v-else>User is not authenticated</p>
+        <p v-if="loading">Cargando...</p>
         <button @click.prevent="loginUser">Login</button>
         <button @click.prevent="registerUser">Register</button>
     </div>

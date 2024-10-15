@@ -1,16 +1,21 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { logout } from '../services/auth';
+import { useAuth } from '../composables/useAuth';
 
 export default defineComponent({
     name: 'AuthLayout',
     setup() {
+        const {
+            loading,
+            logout
+        } = useAuth();
+
         const logoutUser = () => {
-            console.log("logout");
             logout();
         };
 
         return {
+            loading,
             logoutUser
         }
     }
@@ -19,6 +24,7 @@ export default defineComponent({
 
 <template>
     <div class="container">
+        <p v-if="loading">Cargando...</p>
         <button @click.prevent="logoutUser">Logout</button>
         <router-view></router-view>
     </div>
