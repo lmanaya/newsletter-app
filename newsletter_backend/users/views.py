@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, views
 from rest_framework.response import Response
 from rest_framework import status
 from django.utils.translation import gettext_lazy as _
@@ -7,8 +7,6 @@ from .serializers import (
     RegisterSerializer,
     LoginSerializer,
 )
-from .auth import AuthService
-
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -29,3 +27,7 @@ class LoginView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class LogoutView(generics.GenericAPIView):
+    def post(self, request):
+        return Response(status=status.HTTP_200_OK)
