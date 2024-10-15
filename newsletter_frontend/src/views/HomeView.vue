@@ -1,13 +1,24 @@
-<template>
-    <p>Home view</p>
-</template>
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { useFetch } from '../composables/useFetch';
 
-<script>
-export default {
-
-}
+export default defineComponent({
+    name: 'HomeView',
+    setup() {
+        const { data, error, loading } = useFetch('/newsletters/');
+        return { data, error, loading };
+    }
+});
 </script>
 
-<style>
+<template>
+    <div class="container">
+        <p>Home view</p>
+        <p v-if="loading">Cargando..</p>
+        <div v-if="data">
+            <p>{{ data }}</p>
+        </div>
+    </div>
+</template>
 
-</style>
+<style></style>
