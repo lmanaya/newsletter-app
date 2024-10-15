@@ -25,6 +25,11 @@ class NewsletterViewSet(
 
         return self.serializer_class
 
+    def get_permissions(self):
+        if self.action == "list":
+            return []
+        return super().get_permissions()
+
 class SubscriberViewSet(viewsets.ReadOnlyModelViewSet):
     """
     ViewSet for subscribers retrieve() and list() actions
