@@ -1,10 +1,11 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useAuth } from '../composables/useAuth';
 import ButtonComponent from './ButtonComponent.vue';
+import { RouteLocationRaw } from 'vue-router';
 
 export interface Link {
-    path: string;
+    path: RouteLocationRaw;
     name: string;
 }
 
@@ -22,8 +23,11 @@ export default defineComponent({
             logout
         } = useAuth();
 
+        const showMenu = ref<Boolean>(false);
+
         return {
             isAuthenticated,
+            showMenu,
             logout
         }
     },
@@ -37,19 +41,48 @@ export default defineComponent({
     <div class="header">
         <div class="header__container">
             <slot name="main"></slot>
-            <div>
-                <nav class="navbar">
-                    <router-link v-for="link in links" :key="link.path" :to="link.path">{{ link.name }}</router-link>
+            <div class="header__links">
+                <nav class="header__navbar">
+                    <router-link v-for="(link, index) in links" :key="index" :to="link.path">{{ link.name }}</router-link>
                 </nav>
 
-                <ButtonComponent v-if="isAuthenticated" color="alarm" @click="logout">
+                <ButtonComponent
+                    v-if="isAuthenticated"
+                    color="alarm"
+                    variant="ghost"
+                    @click="logout"
+                >
                     Cerrar sesión
                 </ButtonComponent>
                 <router-link :to="{ name: 'Login' }" v-else >
-                    <ButtonComponent color="secondary">
+                    <ButtonComponent color="primary">
                         Ingresar
                     </ButtonComponent>
                 </router-link>
+                <ButtonComponent
+                    class="header-mobile__menu"
+                    color="grey"
+                    variant="ghost"
+                    @click="() => (showMenu = true)"
+                >
+                    <img src="../assets/menu.svg" alt="" width="20">
+                </ButtonComponent>
+            </div>
+        </div>
+
+        <div v-if="showMenu" class="header-mobile">
+            <div class="header-mobile__close">
+                <ButtonComponent color="grey" variant="ghost" @click="() => (showMenu = false)">
+                    <img src="../assets/cross.svg" alt="" width="20">
+                </ButtonComponent>
+            </div>
+            <div class="header-mobile__navbar">
+                <router-link
+                    v-for="(link, index) in links"
+                    :key="index"
+                    :to="link.path"
+                    @click="() => (showMenu = false)"
+                >{{ link.name }}</router-link>
             </div>
         </div>
     </div>
@@ -57,10 +90,49 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "@/styles/variables.scss";
+@import "@/styles/mixins.scss";
 
 .header {
     display: flex;
     background-color: $color-background;
+    border-bottom: solid 3px $color-grey-100;
+
+    & .header__links {
+        flex-grow: 1;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: $size-xs;
+
+        @include responsive(desktop) {
+            gap: $size-md;
+            justify-content: space-between;
+        }
+
+        & .header__navbar {
+            display: none;
+
+            @include responsive(desktop) {
+                display: flex;
+                flex-grow: 1;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: nowrap;
+                gap: $size-md;
+                text-transform: uppercase;
+            }
+
+            & a {
+                margin-right: $size-md;
+                padding: 0 $size-xs;
+
+                &:hover {
+                    border-bottom: solid 1px;
+                }
+            }
+        }
+    }
 }
 
 .header__container {
@@ -72,5 +144,42 @@ export default defineComponent({
     margin: auto;
     width: 100%;
     padding: 0px $size-md;
+}
+
+.header-mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: $color-white;
+    z-index: 1000;
+
+    & .header-mobile__navbar {
+        padding: $size-xl;
+        display: block;
+        text-transform: uppercase;
+        display: flex;
+        flex-direction: column;
+        gap: $size-sm;
+
+        & a {
+            &:hover {
+                border-bottom: solid 1px;
+            }
+        }
+    }
+
+    & .header-mobile__close {
+        display: flex;
+        justify-content: flex-end;
+        padding: $size-sm $size-xl;
+    }
+}
+
+.header-mobile__menu {
+    @include responsive(desktop) {
+        display: none;
+    }
 }
 </style>

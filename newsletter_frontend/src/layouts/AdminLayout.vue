@@ -6,7 +6,16 @@ import HeaderComponent, { Link } from '../components/HeaderComponent.vue';
 export default defineComponent({
     name: 'AuthLayout',
     setup() {
-        const links: Link[] = [];
+        const links: Link[] = [
+            {
+                path: { name: 'Create' },
+                name: "Crear"
+            },
+            {
+                path: { name: 'Send' },
+                name: "Enviar"
+            },
+        ];
 
         const {
             loading,
@@ -34,8 +43,10 @@ export default defineComponent({
         <HeaderComponent :links="links">
             <template #main>
                 <router-link to="/admin">
-                    <p></p>
-                    <h1>Admin Newsletters!</h1>
+                    <div class="layout__logo">
+                        <img src="../assets/logo/logo-secondary.svg" width="20">
+                        <p class="layout__title">Admin</p>
+                    </div>
                 </router-link>
             </template>
         </HeaderComponent>

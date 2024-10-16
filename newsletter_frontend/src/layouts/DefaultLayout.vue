@@ -22,7 +22,10 @@ export default defineComponent({
         <HeaderComponent :links="links">
             <template #main>
                 <router-link to="/">
-                    <p class="layout__title">¡Newsletters!</p>
+                    <div class="layout__logo">
+                        <img src="../assets/logo/logo.svg" width="20">
+                        <p class="layout__title">Newsletters App</p>
+                    </div>
                 </router-link>
             </template>
         </HeaderComponent>
@@ -30,11 +33,4 @@ export default defineComponent({
     </div>
 </template>
 
-<style lang="scss" scoped>
-@import "@/styles/variables.scss";
-
-.layout__title {
-    font-size: $size-lg;
-    font-weight: 600;
-}
-</style>
+<style lang="scss" scoped></style>
