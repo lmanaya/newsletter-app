@@ -1,0 +1,67 @@
+// colors
+$color-white: #FFFFFF;
+$color-black: #000000;
+
+$color-grey-100: #f3ecec;
+$color-grey-200: #B0B0B0;
+$color-grey-300: #535355;
+$color-grey-400: #373738;
+
+$color-primary-50: #d6e7fd;
+$color-primary-100: #2A8FD1;
+$color-primary-200: #1C5B92;
+
+$color-secondary-50: #dafbee;
+$color-secondary-100: #4FD0A1;
+$color-secondary-200: #38B88D;
+
+$color-red-50: #f8d7da;
+$color-red-100: #ce3d4b;
+$color-red-200: #be1828;
+
+$color-text: $color-black;
+$color-help-text: $color-grey-300;
+$color-error-text: $color-red-200;
+$color-background: $color-white;
+
+// Size
+$size-xs: 4px;
+$size-sm: 8px;
+$size-md: 16px;
+$size-lg: 32px;
+$size-xl: 64px;
+
+// Text
+$text-xs: 12px;
+$text-sm: 14px;
+$text-base: 16px;
+$text-md: 20px;
+$text-lg: 26px;
+$text-xl: 32px;
+$text-xxl: 64px;
+
+// Buttons
+$button-height: 40px;
+$button-height-large: 50px;
+$button-height-small: 30px;
+
+$button-min-width: 80px;
+$button-border-width: 2px;
+$button-border-radius: 8px;
+
+// Inputs
+$input-height: 40px;
+$input-height-large: 50px;
+$input-height-small: 30px;
+
+$input-min-width: 80px;
+$input-border-width: 1px;
+
+// breakpoints
+$breakpoint-mobile: 600px;
+$breakpoint-tablet: 1024px;
+$breakpoint-desktop: 1400px;
+
+// Header
+$header-height-mobile: 60px;
+$header-height-desktop: 80px;

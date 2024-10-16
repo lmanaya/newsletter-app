@@ -1,0 +1,48 @@
+@mixin responsive($breakpoint) {
+    @if $breakpoint == mobile {
+        @media (max-width: $breakpoint-mobile) {
+            @content;
+        }
+    } @else if $breakpoint == tablet {
+        @media (min-width: ($breakpoint-mobile + 1)) and (max-width: $breakpoint-tablet) {
+            @content;
+        }
+    } @else if $breakpoint == desktop {
+        @media (min-width: ($breakpoint-tablet + 1)) {
+            @content;
+        }
+    }
+}
+
+@mixin display-flex {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-align-start {
+    align-items: flex-start;
+}
+
+@mixin flex-align-end {
+    align-items: flex-end;
+}
+
+@mixin flex-align-center {
+    align-items: center;
+}
+
+@mixin flex-justify-start {
+    justify-content: flex-start;
+}
+
+@mixin flex-justify-end {
+    justify-content: flex-end;
+}
+
+@mixin flex-justify-center {
+    justify-content: center;
+}
+
