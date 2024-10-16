@@ -2,6 +2,7 @@
 $color-white: #FFFFFF;
 $color-black: #000000;
 
+$color-grey-50: #f8f7f7;
 $color-grey-100: #f3ecec;
 $color-grey-200: #B0B0B0;
 $color-grey-300: #535355;
@@ -22,7 +23,7 @@ $color-red-200: #be1828;
 $color-text: $color-black;
 $color-help-text: $color-grey-300;
 $color-error-text: $color-red-200;
-$color-background: $color-white;
+$color-background: $color-grey-50;
 
 // Size
 $size-xs: 4px;
@@ -56,6 +57,7 @@ $input-height-small: 30px;
 
 $input-min-width: 80px;
 $input-border-width: 1px;
+$input-border-radius: 4px;
 
 // breakpoints
 $breakpoint-mobile: 600px;
@@ -65,3 +67,6 @@ $breakpoint-desktop: 1400px;
 // Header
 $header-height-mobile: 60px;
 $header-height-desktop: 80px;
+
+// Box shadow
+$box-shadow-regular: $color-grey-100 0px 8px 24px;
