@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
+import { useRouter, RouteLocationRaw } from 'vue-router';
 
 export default defineComponent({
     name: 'Button',
@@ -7,6 +8,10 @@ export default defineComponent({
         type: {
             type: String as () => "button" | "submit" | "reset" | undefined,
             default: "button"
+        },
+        to: {
+            type: Object as () => RouteLocationRaw,
+            required: false
         },
         disabled: {
             type: Boolean,
@@ -29,7 +34,9 @@ export default defineComponent({
             default: false,
         }
     },
-    setup(props) {
+    setup(props, { emit }) {
+        const router = useRouter();
+
         const buttonClasses = computed(() => [
             "button",
             `button--${props.color}`,
@@ -38,8 +45,17 @@ export default defineComponent({
             { "button--loading": props.loading || props.disabled },
         ]);
 
+        const onClick = () => {
+            emit("click");
+
+            if (props.to) {
+                router.push(props.to);
+            }
+        }
+
         return {
-            buttonClasses
+            buttonClasses,
+            onClick
         }
     },
 });
@@ -50,7 +66,7 @@ export default defineComponent({
         :type="type"
         :class="buttonClasses"
         :disabled="loading || disabled"
-        @click="$emit('click')"
+        @click="onClick"
     >
         <span class="button__text">
             <slot></slot>
@@ -97,6 +113,7 @@ export default defineComponent({
     font-weight: 600;
     transition: all 0.2s;
     border-radius: $button-border-radius;
+    margin-bottom: $size-xs;
 
     &.button--primary {
         &.button--filled {
@@ -225,7 +242,8 @@ export default defineComponent({
     }
 
     &.button--small {
-        padding: 8px 16px;
+        padding: 0 16px;
+        height: $button-height-small;
         font-size: $text-sm;
 
         &.button--loading {
@@ -237,8 +255,9 @@ export default defineComponent({
         }
     }
     &.button--regular {
-        padding: 10px 18px;
+        padding: 0 18px;
         font-size: $text-base;
+        height: $button-height;
 
         &.button--loading {
             & .button__spinner {
@@ -249,7 +268,8 @@ export default defineComponent({
         }
     }
     &.button--large {
-        padding: 12px 24px;
+        padding: 0 24px;
+        height: $button-height-large;
         font-size: $text-md;
 
         &.button--loading {
