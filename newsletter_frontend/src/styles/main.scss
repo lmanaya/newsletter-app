@@ -26,7 +26,7 @@ input, textarea, button {
 .container {
     max-width: $breakpoint-desktop;
     margin: auto;
-    padding-top: $header-height-mobile;
+    padding: $header-height-mobile $size-md 0 $size-md;
 
     @include responsive(desktop) {
         padding-top: $header-height-desktop;
@@ -48,8 +48,12 @@ a, a.router-link-active {
 
 .layout {
     & .layout__title {
-        font-size: $size-lg;
+        font-size: $text-xl;
         font-weight: 600;
+
+        @include responsive(mobile) {
+            font-size: $text-md;
+        }
     }
 
     & .layout__logo {
