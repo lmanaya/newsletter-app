@@ -16,6 +16,10 @@ $color-secondary-50: #dafbee;
 $color-secondary-100: #4FD0A1;
 $color-secondary-200: #38B88D;
 
+$color-tertiary-50: #f8dafb;
+$color-tertiary-100: #b04fd0;
+$color-tertiary-200: #9038b8;
+
 $color-red-50: #f8d7da;
 $color-red-100: #ce3d4b;
 $color-red-200: #be1828;
@@ -39,7 +43,8 @@ $text-base: 16px;
 $text-md: 20px;
 $text-lg: 26px;
 $text-xl: 32px;
-$text-xxl: 64px;
+$text-xxl: 48px;
+$text-xxxl: 56px;
 
 // Buttons
 $button-height: 40px;
@@ -70,3 +75,4 @@ $header-height-desktop: 80px;
 
 // Box shadow
 $box-shadow-regular: $color-grey-100 0px 8px 24px;
+$box-shadow-card: $color-grey-100  0px 4px 6px -1px, $color-grey-200 0px 2px 4px -1px;

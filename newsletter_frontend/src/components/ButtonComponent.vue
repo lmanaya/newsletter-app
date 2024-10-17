@@ -18,7 +18,7 @@ export default defineComponent({
             default: false
         },
         color: {
-            type: String as () => "primary" | "secondary" | "grey" | "alarm",
+            type: String as () => "primary" | "secondary" | "tertiary" | "grey" | "alarm",
             default: "primary",
         },
         size: {
@@ -170,6 +170,35 @@ export default defineComponent({
         &.button--loading {
             & .button__spinner {
                 border-top-color: $color-secondary-100;
+            }
+        }
+    }
+    &.button--tertiary {
+        &.button--filled {
+            @include button-filled-variant($color-tertiary-100, $color-white);
+            &:hover {
+                background-color: $color-tertiary-200;
+            }
+        }
+        &.button--outlined {
+            @include button-outlined-variant($color-tertiary-100);
+            &:hover {
+                background-color: $color-tertiary-50;
+            }
+        }
+        &.button--ghost {
+            @include button-ghost-variant($color-tertiary-100);
+            &:hover {
+                background-color: $color-tertiary-50;
+            }
+        }
+        &.button--link {
+            @include button-link-variant($color-tertiary-100);
+        }
+
+        &.button--loading {
+            & .button__spinner {
+                border-top-color: $color-tertiary-100;
             }
         }
     }
