@@ -5,8 +5,8 @@ export default defineComponent({
     name: 'InputComponent',
     props: {
         type: {
-            type: String,
-            default: "button"
+            type: String as () => 'text' | 'textarea',
+            default: "text"
         },
         disabled: {
             type: Boolean,
@@ -61,7 +61,16 @@ export default defineComponent({
                 class="input__label"
             >{{ label }}</label>
         </div>
+        <textarea
+            v-if="type == 'textarea'"
+            :id="id ?? name"
+            :placeholder="placeholder"
+            :value="modelValue"
+            @input="(e) => updateValue(e)"
+            @blur="() => emit('blur')"
+        ></textarea>
         <input
+            v-else
             :type="type"
             :id="id ?? name"
             :placeholder="placeholder"
@@ -95,16 +104,23 @@ export default defineComponent({
         font-size: $text-xs;
         color: $color-error-text;
     }
-    & input {
-        min-height: $input-height;
+    & input, & textarea {
+        background-color: transparent;
+        height: $input-height;
         width: 100%;
-        padding: 0 $size-sm;box-sizing: border-box;
+        padding: 0 $size-sm;
+        box-sizing: border-box;
         border-radius: $input-border-radius;
         border: none;
         outline: solid 1px $color-grey-200;
         &:hover {
             outline: solid 1px $color-grey-300;
         }
+    }
+    & textarea {
+        height: $input-height * 2;
+        padding: $size-sm $size-sm;
+        box-sizing: border-box;
     }
 }
 </style>
