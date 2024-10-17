@@ -2,24 +2,22 @@
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { defineComponent, ref } from "vue"
-import { useForm } from "../composables/useForm";
-import { createNewsletter as create } from "../services/newsletters";
 import InputComponent from "./InputComponent.vue";
 import ButtonComponent from "./ButtonComponent.vue";
 import ErrorComponent from './ErrorComponent.vue'
+import { useRequest } from "../composables/useRequest";
 
 export default defineComponent({
     name: 'CreateNewsletter',
     emits: [ 'complete' ],
     setup(props, { emit }) {
-        const loading = ref<Boolean>(false);
         const form = ref({
             name: '',
             description: '',
             call_to_action_text: '',
         });
 
-        const { formErrors, setFormErrors } = useForm(form.value);
+        const { loading, formErrors, post } = useRequest(form.value);
 
         const rules = {
             form: {
@@ -33,12 +31,8 @@ export default defineComponent({
 
         const submitForm = async () => {
             if (!v$.value.$invalid) {
-                loading.value = true;
-                const response = await create(form.value);
-                loading.value = false;
-                if (response.status != 201) {
-                    setFormErrors(response.data);
-                } else {
+                const response = await post("/newsletters/", form.value);
+                if (response.status === 201) {
                     emit('complete');
                 }
             }
@@ -67,7 +61,10 @@ export default defineComponent({
             name="name"
             label="Nombre:"
             v-model="form.name"
-            :errors="v$.form.name.$errors"
+            :errors="[
+                ...v$.form.name.$errors,
+                ...(formErrors?.name || [])
+            ]"
             @blur="v$.form.name.$touch()"
         />
         <InputComponent
@@ -75,7 +72,10 @@ export default defineComponent({
             name="description"
             label="Descripción:"
             v-model="form.description"
-            :errors="v$.form.description.$errors"
+            :errors="[
+                ...v$.form.description.$errors,
+                ...(formErrors?.description || [])
+            ]"
             @blur="v$.form.description.$touch()"
         />
         <InputComponent
@@ -83,7 +83,10 @@ export default defineComponent({
             name="call_to_action_text"
             label="Mensaje de acción:"
             v-model="form.call_to_action_text"
-            :errors="v$.form.call_to_action_text.$errors"
+            :errors="[
+                ...v$.form.call_to_action_text.$errors,
+                ...(formErrors?.call_to_action_text || [])
+            ]"
             @blur="v$.form.call_to_action_text.$touch()"
         />
 

@@ -3,7 +3,7 @@ import { defineComponent, ref } from 'vue';
 import { useFetch } from '../composables/useFetch';
 import ButtonComponent from '../components/ButtonComponent.vue';
 import ModalComponent from '../components/ModalComponent.vue';
-import CreateNewsletter from '../components/CreateNewsletter.vue';
+import NewsletterComponent from '../components/NewsletterComponent.vue';
 import TableComponent from '../components/TableComponent.vue';
 
 export default defineComponent({
@@ -36,7 +36,7 @@ export default defineComponent({
     components: {
         ButtonComponent,
         ModalComponent,
-        CreateNewsletter,
+        NewsletterComponent,
         TableComponent
     }
 });
@@ -64,7 +64,7 @@ export default defineComponent({
                 <h2>Nuevo newsletter</h2>
             </template>
             <template #body>
-                <CreateNewsletter @complete="() => onCompleteForm()" ></CreateNewsletter>
+                <NewsletterComponent @complete="() => onCompleteForm()" ></NewsletterComponent>
             </template>
         </ModalComponent>
     </div>
