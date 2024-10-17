@@ -104,6 +104,10 @@ export default defineComponent({
     text-decoration: underline;
 }
 
+.button__text {
+    text-wrap: nowrap;
+}
+
 .button {
     display: inline-flex;
     align-items: center;
