@@ -60,20 +60,21 @@ export default defineComponent({
                     </ButtonComponent>
                 </router-link>
                 <ButtonComponent
+                    v-if="links.length > 0"
                     class="header-mobile__menu"
                     color="grey"
                     variant="ghost"
                     @click="() => (showMenu = true)"
                 >
-                    <img src="../assets/menu.svg" alt="" width="20">
+                    <img src="../assets/icons/menu.svg" alt="" width="20">
                 </ButtonComponent>
             </div>
         </div>
 
-        <div v-if="showMenu" class="header-mobile">
+        <div v-if="showMenu && links.length > 0" class="header-mobile">
             <div class="header-mobile__close">
                 <ButtonComponent color="grey" variant="ghost" @click="() => (showMenu = false)">
-                    <img src="../assets/cross.svg" alt="" width="20">
+                    <img src="../assets/icons/cross.svg" alt="" width="20">
                 </ButtonComponent>
             </div>
             <div class="header-mobile__navbar">
