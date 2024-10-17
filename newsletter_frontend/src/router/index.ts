@@ -50,6 +50,16 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'Admin',
                 component: () => import('../views/AdminView.vue'),
             },
+            {
+                path: 'newsletters',
+                name: 'Newsletters',
+                component: () => import('../views/NeswlettersView.vue'),
+            },
+            {
+                path: 'envios',
+                name: 'NewsletterEmails',
+                component: () => import('../views/NewsletterEmailsVue.vue'),
+            },
         ],
     },
     {

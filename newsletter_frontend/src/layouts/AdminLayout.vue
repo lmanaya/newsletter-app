@@ -8,12 +8,12 @@ export default defineComponent({
     setup() {
         const links: Link[] = [
             {
-                path: { name: 'Create' },
-                name: "Crear"
+                path: { name: 'Newsletters' },
+                name: "Newsletters"
             },
             {
-                path: { name: 'Send' },
-                name: "Enviar"
+                path: { name: 'NewsletterEmails' },
+                name: "Envios"
             },
         ];
 
@@ -50,7 +50,9 @@ export default defineComponent({
                 </router-link>
             </template>
         </HeaderComponent>
-        <router-view></router-view>
+        <div class="container">
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 
