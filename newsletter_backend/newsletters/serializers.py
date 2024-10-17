@@ -13,7 +13,7 @@ class NewsletterListSerializer(serializers.ModelSerializer):
     """Serializer for listing newsletters."""
     class Meta:
         model = Newsletter
-        fields = ["id", "name"]
+        exclude = ["updated_at"]
 
 class SubscriberSerializer(serializers.ModelSerializer):
     """Serializer for retrieve a subscriber."""
@@ -41,7 +41,7 @@ class SubscribeSerializer(serializers.Serializer):
     def create(self, validated_data):
         subscriber = SubscriptionService.subscribe(**validated_data)
         if not subscriber:
-            raise serializers.ValidationError(_("Email is already subscriber to this newsletter."))
+            raise serializers.ValidationError({ "email" : _("Email is already subscriber to this newsletter.")})
         return subscriber
 
 class UnsubscribeSerializer(serializers.Serializer):
