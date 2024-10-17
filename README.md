@@ -81,7 +81,7 @@ VITE_API_URL=http://localhost:8000/api
 To build and run the application regularly, use the following script:
 
 ```bash
-./run.bat
+./build.bat
  ```
 
 To build and run the application after installing npm dependencies, use the following script:
