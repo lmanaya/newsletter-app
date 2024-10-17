@@ -7,8 +7,8 @@ export interface ApiUser {
 
 export interface PaginatedResponse {
     count: number;
-    next: number | null;
-    previous: number | null;
+    next: String | null;
+    previous: String | null;
     results: [];
 }
 
