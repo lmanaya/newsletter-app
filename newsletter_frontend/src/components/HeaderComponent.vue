@@ -14,7 +14,7 @@ export default defineComponent({
     props: {
         links: {
             type: Array as () => Link[],
-            required: true
+            default: []
         }
     },
     setup() {
