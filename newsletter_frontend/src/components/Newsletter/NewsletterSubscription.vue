@@ -83,7 +83,7 @@ export default defineComponent({
             <div class="card__action">
                 <ButtonComponent
                     v-if="!showForm"
-                    @click="() => (showForm = true)"
+                    @onclick="() => (showForm = true)"
                     :color="color"
                 >
                     {{ newsletter.call_to_action_text }}
@@ -115,7 +115,7 @@ export default defineComponent({
                         <ButtonComponent
                             :color="color"
                             variant="ghost"
-                            @click="resetForm()"
+                            @onclick="resetForm()"
                         >
                             <img src="../assets/icons/cross.svg" alt="" width="10">
                         </ButtonComponent>

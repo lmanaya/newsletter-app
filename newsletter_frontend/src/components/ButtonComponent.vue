@@ -45,8 +45,8 @@ export default defineComponent({
             { "button--loading": props.loading || props.disabled },
         ]);
 
-        const onClick = () => {
-            emit("click");
+        const onclick = () => {
+            emit("onclick");
 
             if (props.to) {
                 router.push(props.to);
@@ -55,7 +55,7 @@ export default defineComponent({
 
         return {
             buttonClasses,
-            onClick
+            onclick
         }
     },
 });
@@ -66,7 +66,7 @@ export default defineComponent({
         :type="type"
         :class="buttonClasses"
         :disabled="loading || disabled"
-        @click="onClick"
+        @click="onclick"
     >
         <span class="button__text">
             <slot></slot>

@@ -69,7 +69,7 @@ export default defineComponent({
                 <ButtonComponent
                     variant="ghost"
                     color="grey"
-                    @click="loadMore()"
+                    @onclick="loadMore()"
                 >
                     Cargar más.
                 </ButtonComponent>

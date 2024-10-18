@@ -83,7 +83,7 @@ export default defineComponent({
                 <ButtonComponent
                     :loading="loading && newsletter"
                     color="grey"
-                    @click="() => (abcdc())"
+                    @onclick="() => (abcdc())"
                 >
                     Sí, desuscribirme de <strong>"{{ data.name }}"</strong>
                 </ButtonComponent>
@@ -92,7 +92,7 @@ export default defineComponent({
                     color="grey"
                     variant="ghost"
                     size="small"
-                    @click="() => (abcdc(true))"
+                    @onclick="() => (abcdc(true))"
                 >
                     Desuscribirme de todos los newsletters
                 </ButtonComponent>

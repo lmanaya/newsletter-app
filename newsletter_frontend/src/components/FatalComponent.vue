@@ -31,7 +31,7 @@ export default defineComponent({
             <img src="../assets/images/error.svg" alt="">
         </template>
         <template #footer>
-            <ButtonComponent color="alarm" @click="reload">Recargar la página</ButtonComponent>
+            <ButtonComponent color="alarm" @onclick="reload">Recargar la página</ButtonComponent>
         </template>
     </ModalComponent>
 </template>

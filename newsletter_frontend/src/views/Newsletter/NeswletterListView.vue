@@ -53,7 +53,7 @@ export default defineComponent({
 <template>
     <div class="newsletters">
         <div class="section">
-            <ButtonComponent @click="() => (showModal = true)">Registrar newsletter</ButtonComponent>
+            <ButtonComponent @onclick="() => (showModal = true)">Registrar newsletter</ButtonComponent>
         </div>
 
         <div class="section">

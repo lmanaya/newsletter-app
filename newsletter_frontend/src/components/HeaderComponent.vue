@@ -50,7 +50,7 @@ export default defineComponent({
                     v-if="isAuthenticated"
                     color="alarm"
                     variant="ghost"
-                    @click="logout"
+                    @onclick="logout"
                 >
                     Cerrar sesión
                 </ButtonComponent>
@@ -64,7 +64,7 @@ export default defineComponent({
                     class="header-mobile__menu"
                     color="grey"
                     variant="ghost"
-                    @click="() => (showMenu = true)"
+                    @onclick="() => (showMenu = true)"
                 >
                     <img src="../assets/icons/menu.svg" alt="" width="20">
                 </ButtonComponent>
@@ -73,7 +73,7 @@ export default defineComponent({
 
         <div v-if="showMenu && links.length > 0" class="header-mobile">
             <div class="header-mobile__close">
-                <ButtonComponent color="grey" variant="ghost" @click="() => (showMenu = false)">
+                <ButtonComponent color="grey" variant="ghost" @onclick="() => (showMenu = false)">
                     <img src="../assets/icons/cross.svg" alt="" width="20">
                 </ButtonComponent>
             </div>
