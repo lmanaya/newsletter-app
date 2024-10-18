@@ -1,4 +1,5 @@
-import { ApiUser, User } from '../types';
+import { ApiUser } from '../types/api';
+import { User } from '../types/auth';
 
 export function transformUser(apiUser: ApiUser): User {
     return {
