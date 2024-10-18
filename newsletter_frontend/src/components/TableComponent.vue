@@ -1,26 +1,31 @@
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import ButtonComponent from './ButtonComponent.vue';
 
 export default defineComponent({
     name: 'TableComponent',
     props: {
         columns: {
-            type: Array,
+            type: Array as () => {field: string, label: string}[],
             required: true,
         },
         data: {
-            type: Array,
+            type: Array as () => Record<string, any>[],
             required: true
         },
         links: {
-            type: Array,
+            type: Array as () => {path: Record<string, any>, label: string}[],
             required: false
         }
     },
     emits: ["page"],
     setup(props, { emit }) {
-        return { emit }
+
+        const getFieldValue = (obj: Record<string, any>, field: string) => {
+            return field.split('.').reduce((o, key) => (o ? o[key] : null), obj);
+        }
+
+        return { getFieldValue, emit }
     },
     components: {
         ButtonComponent
@@ -42,7 +47,7 @@ export default defineComponent({
             <tbody>
                 <tr v-for="(row, rowIndex) in data" :key="rowIndex">
                     <td v-for="(column, colIndex) in columns" :key="colIndex">
-                        {{ row[column.field] }}
+                        {{ getFieldValue(row, column.field) }}
                     </td>
                     <td v-if="links">
                         <ButtonComponent :to="links[rowIndex].path" variant="link">
