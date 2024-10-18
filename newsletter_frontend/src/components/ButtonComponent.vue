@@ -6,7 +6,7 @@ export default defineComponent({
     name: 'Button',
     props: {
         type: {
-            type: String as () => "button" | "submit" | "reset" | undefined,
+            type: String as () => "button" | "submit" | "reset" | "tab" | undefined,
             default: "button"
         },
         to: {
@@ -43,6 +43,7 @@ export default defineComponent({
             `button--${props.size}`,
             `button--${props.variant}`,
             { "button--loading": props.loading || props.disabled },
+            { "button--tab": props.type === "tab" },
         ]);
 
         const onclick = () => {
@@ -63,6 +64,7 @@ export default defineComponent({
 
 <template>
     <button
+        v-if="type !== 'tab'"
         :type="type"
         :class="buttonClasses"
         :disabled="loading || disabled"
@@ -72,6 +74,17 @@ export default defineComponent({
             <slot></slot>
         </span>
         <div v-if="loading" class="button__spinner"></div>
+    </button>
+    <button
+        v-else
+        :type="type"
+        :class="buttonClasses"
+        :disabled="disabled"
+        @click="onclick"
+    >
+        <span class="button__text">
+            <slot></slot>
+        </span>
     </button>
 </template>
 
@@ -324,6 +337,10 @@ export default defineComponent({
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
+    }
+
+    &.button--tab {
+        border-radius: 0px;
     }
 }
 
