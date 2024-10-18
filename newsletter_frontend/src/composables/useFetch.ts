@@ -1,6 +1,6 @@
 import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
-import api from '@/services/api';
+import api from '@/services/apiService';
 import { ErrorResponse, PaginatedResponse } from '@/types/api';
 
 export const useFetch = (url: String) => {

@@ -1,6 +1,6 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
-import { login as loginApi, logout as logoutApi, register as registerApi } from '@/services/auth';
+import { login as loginApi, logout as logoutApi, register as registerApi } from '@/services/authService';
 import { transformUser } from '@/utils/transform';
 import { LoginCredentials, RegisterPayload } from '@/types/auth';
 import { useRouter } from 'vue-router';

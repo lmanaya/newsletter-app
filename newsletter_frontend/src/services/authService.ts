@@ -1,4 +1,4 @@
-import api from './api';
+import api from './apiService';
 import { LoginCredentials, RegisterPayload } from '@/types/auth';
 
 export const login = async (credentials: LoginCredentials) => {

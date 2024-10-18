@@ -1,5 +1,5 @@
 import { NewNewsletter, NewSubscriber, UnsubscribePayload } from '@/types/newsletter';
-import api from './api';
+import api from './apiService';
 
 export const fetchNewsletters = async () => {
     return await api.get('/newsletters/');

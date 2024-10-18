@@ -3,7 +3,7 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { UnsubscribePayload } from '../../types/newsletter';
 import { useApiService } from '../../composables/useApiService';
-import { getNewsletter, unsubscribe } from '../../services/newsletters';
+import { getNewsletter, unsubscribe } from '../../services/newsletterServiceervice';
 import ButtonComponent from '../../components/ButtonComponent.vue';
 import FatalComponent from '../../components/FatalComponent.vue';
 
