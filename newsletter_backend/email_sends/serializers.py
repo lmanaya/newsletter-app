@@ -4,9 +4,13 @@ from .mixins import NewsletterEmailValidationMixin
 from .models import NewsletterEmail, ImageUpload, DocumentUpload
 from .constants import SENDED_STATUS
 from newsletters.models import Newsletter
+from newsletters.serializers import NewsletterListSerializer
 
 class NewsletterEmailSerializer(serializers.ModelSerializer):
     """ Serializer for listing or retrieving newsletter emails. """
+    status_display = serializers.CharField(source='get_status_display', read_only=True)
+    newsletter = NewsletterListSerializer()
+
     class Meta:
         model = NewsletterEmail
         fields = "__all__"
