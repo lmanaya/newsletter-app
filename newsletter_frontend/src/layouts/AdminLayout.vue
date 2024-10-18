@@ -8,17 +8,13 @@ export default defineComponent({
     setup() {
         const links: Link[] = [
             {
-                path: { name: 'NeswletterList' },
+                path: { name: 'NewsletterList' },
                 name: "Newsletters"
             },
             {
-                path: { name: 'DocumentList' },
-                name: "Archivos"
-            },
-            {
                 path: { name: 'EmailList' },
-                name: "Envios"
-            },
+                name: "Emails"
+            }
         ];
 
         const {

@@ -7,7 +7,7 @@ import NewsletterForm from '../../components/Newsletter/NewsletterForm.vue';
 import TableComponent from '../../components/TableComponent.vue';
 
 export default defineComponent({
-    name: 'NeswletterListView',
+    name: 'NewsletterListView',
     setup() {
         const { results, error, loading, fetchData } = useFetch('/newsletters/');
         const showModal = ref<Boolean>(false);

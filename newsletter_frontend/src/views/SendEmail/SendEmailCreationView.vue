@@ -65,7 +65,7 @@ export default defineComponent({
             if (response.status === 200) {
                 data.value = response.data;
             } else {
-                router.push({ name: 'NeswletterList' });
+                router.push({ name: 'NewsletterList' });
             }
         })
 

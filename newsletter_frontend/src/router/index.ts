@@ -52,8 +52,8 @@ const routes: Array<RouteRecordRaw> = [
             },
             {
                 path: 'newsletters',
-                name: 'NeswletterList',
-                component: () => import('../views/Newsletter/NeswletterListView.vue'),
+                name: 'NewsletterList',
+                component: () => import('../views/Newsletter/NewsletterListView.vue'),
             },
             {
                 path: 'newsletters/:id',
@@ -74,12 +74,7 @@ const routes: Array<RouteRecordRaw> = [
                 path: 'emails/envios/:id',
                 name: 'EmailDetail',
                 component: () => import('../views/SendEmail/SendEmailDetailView.vue'),
-            },
-            {
-                path: 'emails/documentos',
-                name: 'DocumentList',
-                component: () => import('../views/SendEmail/SendEmailDocumentsView.vue'),
-            },
+            }
         ],
     },
     {
