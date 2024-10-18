@@ -2,6 +2,7 @@
 import { defineComponent, ref } from 'vue';
 import useVuelidate from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
+import { Newsletter } from '../../types/newsletter';
 import { EmailCreate, EmailUpdate, NewsletterEmail } from '../../types/sendEmails';
 import {
     createSendEmail as createSendEmailApi,
@@ -21,20 +22,19 @@ export default defineComponent({
             required: true,
         },
         newsletter: {
-            type: Number,
+            type: [Object as () => Newsletter, Number],
             required: true
         },
-        newsletter_email: {
+        newsletterEmail: {
             type: Object as () => NewsletterEmail,
             required: false
         }
     },
     emits: ['created', 'updated', 'sended'],
     setup(props, { emit }) {
-        const newsletterEmail = ref<NewsletterEmail | undefined>(props.newsletter_email);
+        const newsletterEmail = ref<NewsletterEmail | undefined>(props.newsletterEmail);
 
         const form = ref<EmailCreate | EmailUpdate>({
-            newsletter: props.newsletter,
             subject: newsletterEmail.value?.subject ?? '',
             title: newsletterEmail.value?.title ?? '',
             content: newsletterEmail.value?.content ?? '',
@@ -48,7 +48,6 @@ export default defineComponent({
 
         const rules = {
             form: {
-                newsletter: { required },
                 subject: { required },
                 title: { required },
                 content: { required },
@@ -68,14 +67,16 @@ export default defineComponent({
             data: createData,
             formErrors: createFormErrors,
             execute: createSendEmail
-        } = useApiService(() => createSendEmailApi(form.value as EmailCreate));
+        } = useApiService(() => createSendEmailApi(
+            {...form.value, newsletter: props.newsletter as number} as EmailCreate
+        ));
 
         const {
             loading: loadingUpdate,
             data: updateData,
             formErrors: updateFormErrors,
             execute: updateSendEmail
-        } = useApiService(() => updateSendEmailApi(form.value as EmailCreate));
+        } = useApiService(() => updateSendEmailApi(newsletterEmail.value?.id as number, form.value as EmailCreate));
 
         const {
             loading,

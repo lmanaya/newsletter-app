@@ -56,17 +56,12 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import('../views/Newsletter/NewsletterListView.vue'),
             },
             {
-                path: 'newsletters/:id',
-                name: 'NeswletterDetail',
-                component: () => import('../views/Newsletter/NewsletterDetailView.vue'),
-            },
-            {
                 path: 'emails/envios',
                 name: 'EmailList',
                 component: () => import('../views/SendEmail/SendEmailListView.vue'),
             },
             {
-                path: 'emails/creacion',
+                path: 'emails/creacion/:id',
                 name: 'EmailCreation',
                 component: () => import('../views/SendEmail/SendEmailCreationView.vue'),
             },
