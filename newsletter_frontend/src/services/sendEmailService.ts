@@ -34,8 +34,16 @@ export const createSendEmail = async (payload: EmailCreate) => {
     return await api.post("/emails/newsletters/", cleanPayload(payload));
 }
 
-export const updateSendEmail = async (payload: EmailUpdate) => {
-    return await api.patch("/emails/newsletters/", cleanPayload(payload));
+export const getSendEmails = async (query: string | null) => {
+    return await api.get(`/emails/newsletters/${query ? '?' + query : ''}`);
+}
+
+export const getSendEmail = async (id: number) => {
+    return await api.get(`/emails/newsletters/${id}`);
+}
+
+export const updateSendEmail = async (id: number, payload: EmailUpdate) => {
+    return await api.patch(`/emails/newsletters/${id}/`, cleanPayload(payload));
 }
 
 export const sendNewsletterEmail = async (payload: SendNewsletter) => {

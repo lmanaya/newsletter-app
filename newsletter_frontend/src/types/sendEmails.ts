@@ -1,5 +1,6 @@
-export interface EmailCreate {
-    newsletter: number;
+import { Newsletter } from "./newsletter";
+
+export interface BaseEmail {
     subject: string;
     title: string;
     content: string;
@@ -9,6 +10,10 @@ export interface EmailCreate {
     subscribers?: number[];
     attached_documents?: number[];
     attached_images?: number[];
+}
+
+export interface EmailCreate extends BaseEmail {
+    newsletter: number;
 }
 
 export interface EmailUpdate {
@@ -23,8 +28,9 @@ export interface EmailUpdate {
     attached_images?: number[];
 }
 
-export interface NewsletterEmail extends EmailCreate {
-    id: number
+export interface NewsletterEmail extends BaseEmail {
+    id: number;
+    newsletter: number | Newsletter
 }
 
 export interface SendNewsletter {
