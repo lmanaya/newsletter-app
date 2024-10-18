@@ -10,7 +10,7 @@ export default defineComponent({
     name: 'NewsletterListView',
     setup() {
         const { results, error, loading, fetchData } = useFetch('/newsletters/');
-        const showModal = ref<Boolean>(false);
+        const showModal = ref<boolean>(false);
 
         const onCompleteForm = () => {
             showModal.value = false;
@@ -26,7 +26,7 @@ export default defineComponent({
 
         const links = computed(() => results.value.map((value) => {
             return {
-                path: { name: 'NeswletterDetail', params: { id: value["id"] }},
+                path: { name: 'EmailCreation', params: { id: value["id"] }},
                 label: "Crear email"
             }
         }))
