@@ -2,13 +2,15 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    name: 'SendView',
-    setup() {}
+    name: 'NewsletterDetailView',
+    setup() {
+
+    }
 });
 </script>
 
 <template>
-    <div></div>
+    <h1>Newsletter</h1>
 </template>
 
 <style></style>

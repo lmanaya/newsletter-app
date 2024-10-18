@@ -1,13 +1,13 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { useFetch } from '../composables/useFetch';
-import ButtonComponent from '../components/ButtonComponent.vue';
-import ModalComponent from '../components/ModalComponent.vue';
-import NewsletterComponent from '../components/NewsletterComponent.vue';
-import TableComponent from '../components/TableComponent.vue';
+import { defineComponent, ref, computed } from 'vue';
+import { useFetch } from '../../composables/useFetch';
+import ButtonComponent from '../../components/ButtonComponent.vue';
+import ModalComponent from '../../components/ModalComponent.vue';
+import NewsletterForm from '../../components/Newsletter/NewsletterForm.vue';
+import TableComponent from '../../components/TableComponent.vue';
 
 export default defineComponent({
-    name: 'NeswlettersView',
+    name: 'NeswletterListView',
     setup() {
         const { results, error, loading, fetchData } = useFetch('/newsletters/');
         const showModal = ref<Boolean>(false);
@@ -24,9 +24,17 @@ export default defineComponent({
             { label: 'CTA', field: 'call_to_action_text'}
         ];
 
+        const links = computed(() => results.value.map((value) => {
+            return {
+                path: { name: 'NeswletterDetail', params: { id: value["id"] }},
+                label: "Crear email"
+            }
+        }))
+
         return {
             results,
             dataColumns,
+            links,
             error,
             loading,
             showModal,
@@ -36,7 +44,7 @@ export default defineComponent({
     components: {
         ButtonComponent,
         ModalComponent,
-        NewsletterComponent,
+        NewsletterForm,
         TableComponent
     }
 });
@@ -55,6 +63,7 @@ export default defineComponent({
                 <TableComponent
                     :columns="dataColumns"
                     :data="results"
+                    :links="links"
                 ></TableComponent>
             </div>
         </div>
@@ -64,7 +73,7 @@ export default defineComponent({
                 <h2>Nuevo newsletter</h2>
             </template>
             <template #body>
-                <NewsletterComponent @complete="() => onCompleteForm()" ></NewsletterComponent>
+                <NewsletterForm @complete="() => onCompleteForm()" ></NewsletterForm>
             </template>
         </ModalComponent>
     </div>

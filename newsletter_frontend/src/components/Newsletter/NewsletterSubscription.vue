@@ -2,15 +2,14 @@
 import useVuelidate from '@vuelidate/core';
 import { email, required } from '@vuelidate/validators';
 import { defineComponent, computed, ref } from 'vue';
-import { useRequest } from '../composables/useRequest';
-import { NewSubscriber } from '../types/newsletter';
-import ButtonComponent from './ButtonComponent.vue';
-import InputComponent from './InputComponent.vue';
-import ErrorComponent from './ErrorComponent.vue';
-
+import { useRequest } from '../../composables/useRequest';
+import { NewSubscriber } from '../../types/newsletter';
+import ButtonComponent from '../ButtonComponent.vue';
+import InputComponent from '../InputComponent.vue';
+import ErrorComponent from '../ErrorComponent.vue';
 
 export default defineComponent({
-    name: 'SubscribeComponent',
+    name: 'NewsletterSubscription',
     props: {
         newsletter: {
             type: Object as () => { id: number, title: String, text: String, call_to_action_text: String},

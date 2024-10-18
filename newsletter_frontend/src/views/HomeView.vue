@@ -1,9 +1,8 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from 'vue';
 import { useFetch } from '../composables/useFetch';
-import SubscribeComponent from '../components/SubscribeComponent.vue';
+import NewsletterSubscription from '../components/Newsletter/NewsletterSubscription.vue';
 import ButtonComponent from '../components/ButtonComponent.vue';
-import { PaginatedResponse } from '../types/api';
 
 export default defineComponent({
     name: 'HomeView',
@@ -38,7 +37,7 @@ export default defineComponent({
         };
     },
     components: {
-        SubscribeComponent,
+        NewsletterSubscription,
         ButtonComponent
     }
 });
@@ -58,7 +57,7 @@ export default defineComponent({
             </div>
 
             <div v-if="totalResults" class="home__content">
-                <SubscribeComponent
+                <NewsletterSubscription
                     v-for="newsletter in totalResults" :key="newsletter.id"
                     :newsletter="newsletter"
                     @subscribe="(value) => onSubscribe(value)"

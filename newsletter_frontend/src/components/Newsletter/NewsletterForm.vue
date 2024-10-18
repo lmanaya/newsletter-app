@@ -2,13 +2,13 @@
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { defineComponent, ref } from "vue"
-import InputComponent from "./InputComponent.vue";
-import ButtonComponent from "./ButtonComponent.vue";
-import ErrorComponent from './ErrorComponent.vue'
-import { useRequest } from "../composables/useRequest";
+import InputComponent from "../InputComponent.vue";
+import ButtonComponent from "../ButtonComponent.vue";
+import ErrorComponent from '../ErrorComponent.vue'
+import { useRequest } from "../../composables/useRequest";
 
 export default defineComponent({
-    name: 'CreateNewsletter',
+    name: 'NewsletterForm',
     emits: [ 'complete' ],
     setup(props, { emit }) {
         const form = ref({

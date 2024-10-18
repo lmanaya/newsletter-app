@@ -52,15 +52,40 @@ const routes: Array<RouteRecordRaw> = [
             },
             {
                 path: 'newsletters',
-                name: 'Newsletters',
-                component: () => import('../views/NeswlettersView.vue'),
+                name: 'NeswletterList',
+                component: () => import('../views/Newsletter/NeswletterListView.vue'),
             },
             {
-                path: 'envios',
-                name: 'NewsletterEmails',
-                component: () => import('../views/NewsletterEmailsVue.vue'),
+                path: 'newsletters/:id',
+                name: 'NeswletterDetail',
+                component: () => import('../views/Newsletter/NewsletterDetailView.vue'),
+            },
+            {
+                path: 'emails/envios',
+                name: 'EmailList',
+                component: () => import('../views/SendEmail/SendEmailListView.vue'),
+            },
+            {
+                path: 'emails/creacion',
+                name: 'EmailCreation',
+                component: () => import('../views/SendEmail/SendEmailCreationView.vue'),
+            },
+            {
+                path: 'emails/envios/:id',
+                name: 'EmailDetail',
+                component: () => import('../views/SendEmail/SendEmailDetailView.vue'),
+            },
+            {
+                path: 'emails/documentos',
+                name: 'DocumentList',
+                component: () => import('../views/SendEmail/SendEmailDocumentsView.vue'),
             },
         ],
+    },
+    {
+        path: '/unsubscribe',
+        name: 'Unsubscribe',
+        component: () => import('../views/Newsletter/NewsletterUnsubscribeView.vue'),
     },
     {
         path: '/:catchAll(.*)',

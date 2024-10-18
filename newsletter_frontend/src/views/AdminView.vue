@@ -8,9 +8,7 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="container">
-        <p>Admin view</p>
-    </div>
+    <h1>Vista del dashboard</h1>
 </template>
 
 <style></style>
