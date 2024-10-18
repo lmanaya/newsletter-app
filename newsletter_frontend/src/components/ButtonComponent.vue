@@ -46,7 +46,8 @@ export default defineComponent({
             { "button--tab": props.type === "tab" },
         ]);
 
-        const onclick = () => {
+        const onclick = (e: Event) => {
+            e.preventDefault();
             emit("onclick");
 
             if (props.to) {
@@ -77,7 +78,6 @@ export default defineComponent({
     </button>
     <button
         v-else
-        :type="type"
         :class="buttonClasses"
         :disabled="disabled"
         @click="onclick"
