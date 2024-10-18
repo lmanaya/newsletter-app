@@ -82,8 +82,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import "@/styles/variables.scss";
 .newsletters {
-    padding-top: $size-lg;
-
     & .newsletters__resuls h1 {
         margin-bottom: $size-md;
         font-size: $text-lg;

@@ -146,9 +146,4 @@ export default defineComponent({
     </div>
 </template>
 
-<style lang="scss" scoped>
-@import "@/styles/variables.scss";
-.create-email {
-    padding-top: $size-lg;
-}
-</style>
+<style lang="scss" scoped></style>

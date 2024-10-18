@@ -26,10 +26,10 @@ input, textarea, button {
 .container {
     max-width: $breakpoint-desktop;
     margin: auto;
-    padding: $header-height-mobile $size-md 0 $size-md;
+    padding: ($header-height-mobile + $size-md) $size-md 0 $size-md;
 
     @include responsive(desktop) {
-        padding-top: $header-height-desktop;
+        padding-top: ($header-height-desktop + $size-lg);
     }
 }
 

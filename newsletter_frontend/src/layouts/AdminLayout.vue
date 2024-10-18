@@ -12,6 +12,10 @@ export default defineComponent({
                 name: "Newsletters"
             },
             {
+                path: { name: 'DocumentList' },
+                name: "Archivos"
+            },
+            {
                 path: { name: 'EmailList' },
                 name: "Envios"
             },
