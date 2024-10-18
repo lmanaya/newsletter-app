@@ -9,14 +9,17 @@ export const useForm = (form: any) => {
     }
 
     onMounted(() => {
-        Object.keys(form).forEach((field) => {
-            watch(() => form[field as keyof typeof form], (newValue, oldValue) => {
-                if (newValue !== oldValue && formErrors.value) {
-                    delete formErrors.value[field];
-                    delete formErrors.value.non_field_errors;
-                }
+        if (form) {
+            Object.keys(form).forEach((field) => {
+                watch(() => form[field as keyof typeof form], (newValue, oldValue) => {
+                    if (newValue !== oldValue && formErrors.value) {
+                        delete formErrors.value[field];
+                        delete formErrors.value.non_field_errors;
+                    }
+                });
             });
-        });
+
+        }
     });
 
     return { formErrors, setFormErrors };
