@@ -2,7 +2,7 @@ from typing import Optional
 from .models import NewsletterEmail
 from .tasks import send_newsletter_email_task
 from django.template.loader import render_to_string
-from newsletters.models import Subscriber
+from newsletters.models import Subscriber, Newsletter
 from os import environ
 from django.template import Template, Context
 from .constants import SENDED_STATUS
@@ -11,16 +11,18 @@ import mimetypes
 class EmailService:
     @staticmethod
     def get_newsletter_email_html_content(
+        newsletter: Newsletter,
         subscriber: Subscriber,
         body: Optional[str] = None,
         title: Optional[str] = None,
-        content: Optional[str] = None
+        content: Optional[str] = None,
     ) -> str:
         """
         Generate HTML content for the newsletter email.
 
         Args:
-            subscriber (Subscriber): The subscriber te recieve the email.
+            newsletter (Newsletter): The newsletter from the email.
+            subscriber (Subscriber): The subscriber to recieve the email.
             body (Optional[str]): The HTML body of the email template.
             title (Optional[str]): The title of email when the body is not provided.
             content (Optional[str]): The content of email when the body is not provided.
@@ -29,7 +31,7 @@ class EmailService:
             str: The HTML content for the newsletter email specific for a subscriber
         """
 
-        unsubscribe_url = f"{environ.get('WEB_BASE_URL')}/unsubscribe?token={subscriber.unsubscribe_token}"
+        unsubscribe_url = f"{environ.get('WEB_BASE_URL')}/unsubscribe?token={subscriber.unsubscribe_token}&newsletter={newsletter.id}"
 
         if not body:
             return render_to_string('default.html', {
@@ -65,6 +67,7 @@ class EmailService:
         """
         for subscriber in newsletter_email.subscribers.all():
             html_content = EmailService.get_newsletter_email_html_content(
+                newsletter=newsletter_email.newsletter,
                 subscriber=subscriber,
                 body=newsletter_email.body,
                 title=newsletter_email.title,
