@@ -13,6 +13,7 @@ import { useApiService } from '../../composables/useApiService';
 import InputComponent from '../InputComponent.vue';
 import ButtonComponent from '../ButtonComponent.vue';
 import ErrorComponent from '../ErrorComponent.vue';
+import SendEmailFiles from '../SendEmail/SendEmailFiles.vue';
 
 export default defineComponent({
     name: 'SendEmailForm',
@@ -117,15 +118,19 @@ export default defineComponent({
             }
         };
 
-        // const updateFile = (type: string, value: number) => {
-        //     if (type === "document") {
-        //         form.value.attached_documents = [value];
-        //         form.value.attached_images = [];
-        //     } else {
-        //         form.value.attached_documents = [];
-        //         form.value.attached_images = [value];
-        //     }
-        // };
+        const updateFile = async (type: string, value: number) => {
+            if (type === "document") {
+                form.value.attached_documents = [value];
+                form.value.attached_images = [];
+            } else {
+                form.value.attached_documents = [];
+                form.value.attached_images = [value];
+            }
+
+            if (props.action === 'update') {
+                await updateSendEmail();
+            }
+        };
 
         return {
             loadingCreate,
@@ -139,6 +144,7 @@ export default defineComponent({
             formErrors,
             form,
             v$,
+            updateFile,
             submitForm
         }
     },
@@ -146,6 +152,7 @@ export default defineComponent({
         InputComponent,
         ButtonComponent,
         ErrorComponent,
+        SendEmailFiles
     }
 });
 </script>
@@ -188,12 +195,12 @@ export default defineComponent({
             @blur="v$.form.content.$touch()"
         />
 
-        <!-- <UploadFile
+        <SendEmailFiles
             :attached_documents="form.attached_documents"
             :attached_images="form.attached_images"
-            @updateDocument="(value) => updateFile('document', value)"
-            @updateImage="(value) => updateFile('image', value)"
-        /> -->
+            @update:attached_documents="(value) => updateFile('document', value)"
+            @update:attached_images="(value) => updateFile('image', value)"
+        />
         <ErrorComponent v-if="formErrors" :errors="formErrors"/>
 
         <div class="form__buttons">

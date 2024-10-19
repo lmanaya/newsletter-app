@@ -19,8 +19,10 @@ export const useApiService = (
         try {
             const result = await apiFunction();
             data.value = result.data;
+            return true;
         } catch (error: any) {
             setFormErrors(error.response);
+            return false;
         } finally {
             loading.value = false;
         }
