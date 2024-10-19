@@ -35,6 +35,7 @@ const store = createStore<State>({
         logout({ commit }) {
             commit('setAuthentication', false);
             commit('setUser', null);
+            localStorage.removeItem('isAuthenticated');
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
         },
