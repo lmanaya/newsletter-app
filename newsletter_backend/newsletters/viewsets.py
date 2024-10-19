@@ -1,4 +1,5 @@
-from rest_framework import viewsets, mixins
+from rest_framework import viewsets, mixins, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Newsletter, Subscriber
 from .serializers import (
     NewsletterSerializer,
@@ -36,6 +37,9 @@ class SubscriberViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Subscriber.objects.all()
     serializer_class = SubscriberSerializer
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    filterset_fields = ['newsletters']
+    search_fields = ['email']
 
     def get_serializer_class(self):
         if self.action == "list":
