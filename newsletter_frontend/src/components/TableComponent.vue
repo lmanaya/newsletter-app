@@ -16,16 +16,24 @@ export default defineComponent({
         links: {
             type: Array as () => {path: Record<string, any>, label: string}[],
             required: false
+        },
+        checkboxes: {
+            type: Array as () => boolean[],
+            default: false
         }
     },
-    emits: ["page"],
+    emits: ["page", 'onCheckbox'],
     setup(props, { emit }) {
 
         const getFieldValue = (obj: Record<string, any>, field: string) => {
             return field.split('.').reduce((o, key) => (o ? o[key] : null), obj);
         }
 
-        return { getFieldValue, emit }
+        const onCheckbox = (index: number, e: any) => {
+            emit('onCheckbox', index, e.target.checked);
+        };
+
+        return { getFieldValue, emit, onCheckbox }
     },
     components: {
         ButtonComponent
@@ -42,6 +50,7 @@ export default defineComponent({
                         {{ column.label }}
                     </th>
                     <th v-if="links"></th>
+                    <th v-if="checkboxes"></th>
                 </tr>
             </thead>
             <tbody>
@@ -53,6 +62,14 @@ export default defineComponent({
                         <ButtonComponent :to="links[rowIndex].path" variant="link">
                             {{ links[rowIndex].label }}
                         </ButtonComponent>
+                    </td>
+                    <td v-if="checkboxes">
+                        <input
+                            type="checkbox"
+                            :name="`checkbox-${rowIndex}`"
+                            :checked="checkboxes[rowIndex]"
+                            @input="(e) => onCheckbox(rowIndex, e)"
+                        >
                     </td>
                 </tr>
             </tbody>

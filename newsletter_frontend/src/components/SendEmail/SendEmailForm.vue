@@ -14,6 +14,7 @@ import InputComponent from '../InputComponent.vue';
 import ButtonComponent from '../ButtonComponent.vue';
 import ErrorComponent from '../ErrorComponent.vue';
 import SendEmailFiles from '../SendEmail/SendEmailFiles.vue';
+import SendEmailSubscribers from '../SendEmail/SendEmailSubscribers.vue';
 
 export default defineComponent({
     name: 'SendEmailForm',
@@ -132,6 +133,13 @@ export default defineComponent({
             }
         };
 
+        const handleSelectionSubscribers = async (value: number[]) => {
+            form.value.subscribers = value;
+            if (props.action === 'update') {
+                await updateSendEmail();
+            }
+        }
+
         return {
             loadingCreate,
             loadingUpdate,
@@ -145,14 +153,16 @@ export default defineComponent({
             form,
             v$,
             updateFile,
-            submitForm
+            submitForm,
+            handleSelectionSubscribers
         }
     },
     components:{
         InputComponent,
         ButtonComponent,
         ErrorComponent,
-        SendEmailFiles
+        SendEmailFiles,
+        SendEmailSubscribers
     }
 });
 </script>
@@ -201,6 +211,13 @@ export default defineComponent({
             @update:attached_documents="(value) => updateFile('document', value)"
             @update:attached_images="(value) => updateFile('image', value)"
         />
+
+        <SendEmailSubscribers
+            :subscribers="form.subscribers"
+            :newsletterId=" typeof newsletter === 'number' ? newsletter : newsletter.id"
+            @update="(value) => handleSelectionSubscribers(value)"
+        />
+
         <ErrorComponent v-if="formErrors" :errors="formErrors"/>
 
         <div class="form__buttons">

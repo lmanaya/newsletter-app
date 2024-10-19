@@ -47,11 +47,6 @@ const routes: Array<RouteRecordRaw> = [
         children: [
             {
                 path: '',
-                name: 'Admin',
-                component: () => import('../views/AdminView.vue'),
-            },
-            {
-                path: 'newsletters',
                 name: 'NewsletterList',
                 component: () => import('../views/Newsletter/NewsletterListView.vue'),
             },
