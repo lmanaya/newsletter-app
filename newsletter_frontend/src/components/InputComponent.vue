@@ -32,13 +32,13 @@ export default defineComponent({
             required: false
         },
         errors: {
-            type: Object,
-            default: {}
+            type: Array,
+            default: []
         },
     },
     emits: ['update:modelValue', 'blur'],
     setup(props, { emit }) {
-        const inputErrors = computed(() => props.errors.map((e: any) => e.$message ?? e));
+        const inputErrors = computed(() => props.errors?.map((e: any) => e.$message ?? e));
         const updateValue = (e: any) => {
             emit('update:modelValue', e.target.value);
         }

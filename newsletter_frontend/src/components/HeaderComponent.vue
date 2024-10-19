@@ -55,7 +55,7 @@ export default defineComponent({
                     Cerrar sesión
                 </ButtonComponent>
                 <router-link :to="{ name: 'Login' }" v-else >
-                    <ButtonComponent color="primary">
+                    <ButtonComponent color="primary" :preventDefault="false">
                         Ingresar
                     </ButtonComponent>
                 </router-link>

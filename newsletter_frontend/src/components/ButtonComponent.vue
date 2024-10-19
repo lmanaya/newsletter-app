@@ -32,6 +32,10 @@ export default defineComponent({
         loading: {
             type: Boolean,
             default: false,
+        },
+        preventDefault:{
+            type: Boolean,
+            default: true
         }
     },
     setup(props, { emit }) {
@@ -47,7 +51,9 @@ export default defineComponent({
         ]);
 
         const onclick = (e: Event) => {
-            e.preventDefault();
+            if (props.preventDefault) {
+                e.preventDefault();
+            }
             emit("onclick");
 
             if (props.to) {

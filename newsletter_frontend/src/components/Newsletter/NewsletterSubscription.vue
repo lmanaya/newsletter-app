@@ -109,6 +109,7 @@ export default defineComponent({
                             variant="outlined"
                             :disabled="v$.$invalid"
                             :loading="loading"
+                            :preventDefault="false"
                         >
                             OK
                         </ButtonComponent>

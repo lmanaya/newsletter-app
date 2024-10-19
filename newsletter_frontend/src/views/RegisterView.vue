@@ -135,6 +135,7 @@ export default defineComponent({
                         type="submit"
                         :disabled="v$.$invalid"
                         :loading="loading"
+                        :preventDefault="false"
                     >
                         Resgistrarme
                     </ButtonComponent>
