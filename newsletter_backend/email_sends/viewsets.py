@@ -33,6 +33,7 @@ class ImageUploadViewSet(
     mixins.CreateModelMixin,
     mixins.RetrieveModelMixin,
     mixins.DestroyModelMixin,
+    mixins.UpdateModelMixin,
     viewsets.GenericViewSet
 ):
     """
@@ -45,6 +46,7 @@ class DocumentUploadViewSet(
     mixins.CreateModelMixin,
     mixins.RetrieveModelMixin,
     mixins.DestroyModelMixin,
+    mixins.UpdateModelMixin,
     viewsets.GenericViewSet
 ):
     """
